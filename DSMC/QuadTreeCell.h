@@ -10,37 +10,32 @@ struct QuadTreeCell : public Cell {
 	std::shared_ptr<Boundary> posXBC, posYBC, negXBC, negYBC;
 
 	// neighbor cells in each direction
-	std::shared_ptr<QuadTreeCell> posXNbr, posYNbr, negXNbr, negYNbr;
+	std::shared_ptr<QuadTreeCell>
+		posXNbr = nullptr,
+		posYNbr = nullptr,
+		negXNbr = nullptr,
+		negYNbr = nullptr;
 
 	// child cells, enumerated using Cartesion coordinate convention
-	std::shared_ptr<QuadTreeCell> quad1, quad2, quad3, quad4;
+	std::shared_ptr<QuadTreeCell>
+		quad1 = nullptr,
+		quad2 = nullptr, 
+		quad3 = nullptr,
+		quad4 = nullptr;
 
-	/**
-	 * @brief Constructor for QuadTreeCell
-	 * @param _posXBC BC in the positive X direction
-	 * @param _posYBC BC in the positive Y direction
-	 * @param _negXBC BC in the positive X direction
-	 * @param _negYBC BC in the positive Y direction
-	 * @param _posXNbr neighbor in the positive X direction
-	 * @param _posYNbr neighbor in the positive Y direction
-	 * @param _negXNbr neighbor in the positive X direction
-	 * @param _negYNbr neighbor in the positive Y direction
-	 */
-	QuadTreeCell(
-		std::shared_ptr<Boundary> _posXBC,
-		std::shared_ptr<Boundary> _posYBC,
-		std::shared_ptr<Boundary> _negXBC,
-		std::shared_ptr<Boundary> _negYBC,
-		std::shared_ptr<QuadTreeCell> _posXNbr,
-		std::shared_ptr<QuadTreeCell> _posYNbr,
-		std::shared_ptr<QuadTreeCell> _negXNbr,
-		std::shared_ptr<QuadTreeCell> _negYNbr
-	);
+	std::shared_ptr<QuadTreeCell> parent;
 
 	/**
 	 * @brief Returns if the cell has any children
+	 * @return bool whether cell has children
 	 */
-	bool hasChildren() override;
+	const bool hasChildren() const override;
+
+	/**
+	 * @brief Gets nodes (coordinates of 4 corners) of the cell
+	 * @return vector of node coordinates
+	 */
+	const std::vector<const Vec> getNodes() const override;
 
 	/**
 	 * @brief Refines the cell by splitting it
